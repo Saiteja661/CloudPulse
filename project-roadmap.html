@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevOps Mastery Project — Sai Teja</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --surface: #111418;
+    --border: #1e2530;
+    --accent: #00d4aa;
+    --accent2: #ff6b35;
+    --accent3: #4f8eff;
+    --text: #e8edf5;
+    --muted: #6b7a90;
+    --warn: #f5c842;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 8vw, 96px);
+    line-height: 0.92;
+    letter-spacing: 2px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  h1 span {
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 620px;
+    margin-top: 20px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+
+  .meta-pill {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .meta-pill .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* PROJECT NAME BOX */
+  .project-name-box {
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    border-left: 4px solid var(--accent);
+    padding: 28px 32px;
+    margin: 48px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-name-box::after {
+    content: '{ PROJECT }';
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    opacity: 0.3;
+    letter-spacing: 2px;
+  }
+
+  .project-name-box h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+
+  .project-name-box p {
+    color: var(--muted);
+    font-size: 14px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ARCHITECTURE */
+  .section {
+    padding: 56px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: var(--border);
+    line-height: 1;
+    user-select: none;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--text);
+    padding-bottom: 8px;
+  }
+
+  /* ARCH DIAGRAM */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .arch-cell {
+    background: var(--surface);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .arch-cell.highlight {
+    background: #0d1a17;
+    border: 1px solid rgba(0,212,170,0.2);
+  }
+
+  .arch-icon {
+    font-size: 22px;
+  }
+
+  .arch-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .arch-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .arch-desc {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* TECH STACK BADGES */
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+  }
+
+  .badge.aws { background: rgba(255,107,53,0.15); color: var(--accent2); border: 1px solid rgba(255,107,53,0.3); }
+  .badge.devops { background: rgba(0,212,170,0.12); color: var(--accent); border: 1px solid rgba(0,212,170,0.3); }
+  .badge.mon { background: rgba(79,142,255,0.12); color: var(--accent3); border: 1px solid rgba(79,142,255,0.3); }
+  .badge.sec { background: rgba(245,200,66,0.12); color: var(--warn); border: 1px solid rgba(245,200,66,0.3); }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent3), transparent);
+  }
+
+  .phase {
+    padding-left: 72px;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .phase-dot {
+    position: absolute;
+    left: 16px;
+    top: 4px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .phase-week {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+
+  .phase-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--text);
+  }
+
+  .phase-body {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .phase-intro {
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    font-style: italic;
+  }
+
+  .step-list {
+    list-style: none;
+  }
+
+  .step-list li {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 14px;
+    align-items: start;
+    font-size: 13px;
+  }
+
+  .step-list li:last-child {
+    border-bottom: none;
+  }
+
+  .step-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    min-width: 28px;
+    padding-top: 1px;
+  }
+
+  .step-text {
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .step-text .cmd {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent3);
+    background: rgba(79,142,255,0.08);
+    padding: 4px 8px;
+    border-radius: 2px;
+    margin-top: 6px;
+    border-left: 2px solid var(--accent3);
+  }
+
+  .step-tags {
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  /* DELIVERABLES */
+  .deliverables {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .deliverable-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .deliverable-card:hover {
+    border-color: var(--accent);
+  }
+
+  .deliverable-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .deliverable-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .deliverable-card p {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .deliverable-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  /* COST TABLE */
+  .cost-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .cost-table th {
+    background: var(--surface);
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .cost-table td {
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .cost-table tr:nth-child(even) td {
+    background: var(--surface);
+  }
+
+  .cost-table .free { color: var(--accent); }
+  .cost-table .warn { color: var(--warn); }
+
+  /* RESUME COVERAGE */
+  .coverage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+  }
+
+  .coverage-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .coverage-item .check {
+    color: var(--accent);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .coverage-item span {
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 0;
+    text-align: center;
+  }
+
+  .footer p {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+
+  .footer .domain {
+    color: var(--accent);
+    font-size: 18px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 4px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* NOTE BOX */
+  .note-box {
+    background: rgba(245,200,66,0.06);
+    border: 1px solid rgba(245,200,66,0.25);
+    border-left: 4px solid var(--warn);
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--muted);
+    margin: 20px 0;
+    border-radius: 0 2px 2px 0;
+  }
+
+  .note-box strong {
+    color: var(--warn);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+  }
+
+  /* DOMAIN ARCH */
+  .domain-flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    margin: 24px 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+  }
+
+  .flow-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 10px 16px;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .flow-node.accent {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .flow-arrow {
+    color: var(--muted);
+    padding: 0 8px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 700px) {
+    .arch-grid { grid-template-columns: 1fr; }
+    .step-list li { grid-template-columns: auto 1fr; }
+    .step-tags { flex-direction: row; align-items: flex-start; }
+    .cost-table { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Production-Grade Project Blueprint</div>
+    <h1>DevOps <span>Mastery</span></h1>
+    <p class="hero-sub">
+      A single, cohesive production-level project designed to cover every skill on your resume — cloud infrastructure, CI/CD, observability, security, containers, and backend APIs — all within AWS Free Tier limits.
+    </p>
+    <div class="hero-meta">
+      <div class="meta-pill"><span class="dot"></span> FREE TIER ONLY</div>
+      <div class="meta-pill">saiteja.shop</div>
+      <div class="meta-pill">8-WEEK TIMELINE</div>
+      <div class="meta-pill">PRODUCTION READY</div>
+    </div>
+  </div>
+
+  <!-- PROJECT NAME -->
+  <div class="project-name-box">
+    <h2>CloudPulse — Real-Time URL Health Monitor & Alerting Platform</h2>
+    <p>// A production SaaS-style uptime monitoring service with full DevOps lifecycle</p>
+  </div>
+
+  <!-- WHAT IS IT -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div class="section-title">What You're Building</div>
+    </div>
+
+    <p style="font-size:14px; color: var(--muted); max-width: 720px; margin-bottom: 32px; line-height: 1.8;">
+      <strong style="color: var(--text);">CloudPulse</strong> is an uptime monitoring platform where users register URLs, and the system checks them every minute, stores metrics, triggers alerts on downtime, and exposes a live dashboard. It's a complete SaaS product skeleton — with a Python Flask API backend, a React/HTML frontend, a full DevOps pipeline, and deep AWS integration.
+    </p>
+
+    <div class="arch-grid">
+      <div class="arch-cell highlight">
+        <div class="arch-icon">🌐</div>
+        <div class="arch-label">Frontend</div>
+        <div class="arch-name">Dashboard UI</div>
+        <div class="arch-desc">Static site on S3 + CloudFront, served from saiteja.shop</div>
+        <div class="tech-stack">
+          <span class="badge aws">S3</span>
+          <span class="badge aws">CloudFront</span>
+          <span class="badge aws">Route 53</span>
+        </div>
+      </div>
+      <div class="arch-cell highlight">
+        <div class="arch-icon">⚙️</div>
+        <div class="arch-label">Backend API</div>
+        <div class="arch-name">Flask Microservice</div>
+        <div class="arch-desc">REST API on EC2 (t2.micro) inside VPC with private subnet</div>
+        <div class="tech-stack">
+          <span class="badge aws">EC2</span>
+          <span class="badge aws">VPC</span>
+          <span class="badge devops">Python Flask</span>
+        </div>
+      </div>
+      <div class="arch-cell highlight">
+        <div class="arch-icon">🔁</div>
+        <div class="arch-label">Monitoring Engine</div>
+        <div class="arch-name">Lambda Poller</div>
+        <div class="arch-desc">AWS Lambda checks URLs every 60s via EventBridge scheduler</div>
+        <div class="tech-stack">
+          <span class="badge aws">Lambda</span>
+          <span class="badge aws">EventBridge</span>
+          <span class="badge devops">Python</span>
+        </div>
+      </div>
+      <div class="arch-cell">
+        <div class="arch-icon">🗄️</div>
+        <div class="arch-label">Data Layer</div>
+        <div class="arch-name">MySQL on RDS</div>
+        <div class="arch-desc">Free-tier RDS db.t3.micro stores URLs, checks, incidents</div>
+        <div class="tech-stack">
+          <span class="badge aws">RDS</span>
+          <span class="badge devops">MySQL</span>
+        </div>
+      </div>
+      <div class="arch-cell">
+        <div class="arch-icon">📊</div>
+        <div class="arch-label">Observability</div>
+        <div class="arch-name">CloudWatch + Grafana</div>
+        <div class="arch-desc">Dashboards, alarms, log groups for API, Lambda, and infra metrics</div>
+        <div class="tech-stack">
+          <span class="badge mon">CloudWatch</span>
+          <span class="badge mon">Grafana</span>
+          <span class="badge mon">Prometheus</span>
+        </div>
+      </div>
+      <div class="arch-cell">
+        <div class="arch-icon">🚀</div>
+        <div class="arch-label">CI/CD Pipeline</div>
+        <div class="arch-name">GitHub Actions</div>
+        <div class="arch-desc">Automated lint → test → build → deploy → rollback pipeline</div>
+        <div class="tech-stack">
+          <span class="badge devops">GitHub Actions</span>
+          <span class="badge devops">Docker</span>
+          <span class="badge devops">Terraform</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <div style="font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 12px; letter-spacing: 2px;">DOMAIN FLOW</div>
+      <div class="domain-flow">
+        <div class="flow-node accent">saiteja.shop</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">Route 53</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">CloudFront</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">S3 Static Site</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">API: api.saiteja.shop</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">EC2 Flask</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div class="section-title">8-Week Build Timeline</div>
+    </div>
+
+    <div class="timeline">
+
+      <!-- PHASE 1 -->
+      <div class="phase">
+        <div class="phase-dot">1</div>
+        <div class="phase-header">
+          <span class="phase-week">WEEK 1</span>
+          <span class="phase-title">Infrastructure Foundation with Terraform</span>
+          <span class="badge devops">IaC</span>
+          <span class="badge aws">AWS</span>
+        </div>
+        <div class="phase-body">
+          <div class="phase-intro">Set up all AWS infrastructure as code using Terraform before writing a single line of application code. This is how real SRE teams work.</div>
+          <ul class="step-list">
+            <li>
+              <span class="step-num">1.1</span>
+              <div class="step-text">
+                Create a GitHub repo <code style="font-family: 'Space Mono', monospace; font-size: 11px;">cloudpulse</code> with directories: <code style="font-family:'Space Mono',monospace;font-size:11px;">/terraform</code>, <code style="font-family:'Space Mono',monospace;font-size:11px;">/backend</code>, <code style="font-family:'Space Mono',monospace;font-size:11px;">/frontend</code>, <code style="font-family:'Space Mono',monospace;font-size:11px;">/lambda</code>, <code style="font-family:'Space Mono',monospace;font-size:11px;">.github/workflows</code>
+              </div>
+              <div class="step-tags"><span class="badge devops">Git</span></div>
+            </li>
+            <li>
+              <span class="step-num">1.2</span>
+              <div class="step-text">
+                Write Terraform modules for: VPC with public + private subnets, Internet Gateway, NAT Gateway (avoid NAT — use VPC Endpoints instead to stay free), Security Groups, and IAM roles.
+                <span class="cmd">terraform init && terraform plan -out=tfplan && terraform apply tfplan</span>
+              </div>
+              <div class="step-tags"><span class="badge devops">Terraform</span></div>
+            </li>
+            <li>
+              <span class="step-num">1.3</span>
+              <div class="step-text">
+                Provision EC2 t2.micro in public subnet with a security group that allows only port 443/80/22. Use key pair for SSH. Add user-data script to install Python, pip, and nginx on boot.
+              </div>
+              <div class="step-tags"><span class="badge aws">EC2</span></div>
+            </li>
+            <li>
+              <span class="step-num">1.4</span>
+              <div class="step-text">
+                Provision RDS MySQL db.t3.micro in private subnet. Store credentials in AWS Secrets Manager (free tier). Configure security group to only allow EC2's security group as a source.
+              </div>
+              <div class="step-tags"><span class="badge aws">RDS</span><span class="badge sec">IAM</span></div>
+            </li>
+            <li>
+              <span class="step-num">1.5</span>
+              <div class="step-text">
+                Create S3 bucket for frontend static hosting + another bucket for Terraform remote state with DynamoDB table for state locking. Enable versioning on both.
+                <span class="cmd">aws s3api put-bucket-versioning --bucket cloudpulse-tf-state --versioning-configuration Status=Enabled</span>
+              </div>
+              <div class="step-tags"><span class="badge aws">S3</span></div>
+            </li>
+            <li>
+              <span class="step-num">1.6</span>
+              <div class="step-text">
+                Configure Route 53 hosted zone for saiteja.shop. Create A record for root and CNAME for api.saiteja.shop pointing to EC2 elastic IP. Request ACM SSL certificate for both.
+              </div>
+              <div class="step-tags"><span class="badge aws">Route 53</span><span class="badge sec">ACM</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PHASE 2 -->
+      <div class="phase">
+        <div class="phase-dot">2</div>
+        <div class="phase-header">
+          <span class="phase-week">WEEK 2</span>
+          <span class="phase-title">Flask Backend API + Database Schema</span>
+          <span class="badge devops">Python</span>
+          <span class="badge aws">EC2</span>
+        </div>
+        <div class="phase-body">
+          <div class="phase-intro">Build the core REST API that handles URL registration, check history retrieval, and alerting. Real microservice patterns — not a toy app.</div>
+          <ul class="step-list">
+            <li>
+              <span class="step-num">2.1</span>
+              <div class="step-text">
+                Design MySQL schema: tables for <strong>users</strong>, <strong>monitors</strong> (url, name, interval, status), <strong>check_results</strong> (monitor_id, status_code, latency_ms, is_up, checked_at), <strong>incidents</strong> (start_time, end_time, duration).
+              </div>
+              <div class="step-tags"><span class="badge devops">MySQL</span></div>
+            </li>
+            <li>
+              <span class="step-num">2.2</span>
+              <div class="step-text">
+                Build Flask API with endpoints: <code style="font-family:'Space Mono',monospace;font-size:11px;">POST /monitors</code>, <code style="font-family:'Space Mono',monospace;font-size:11px;">GET /monitors</code>, <code style="font-family:'Space Mono',monospace;font-size:11px;">GET /monitors/:id/history</code>, <code style="font-family:'Space Mono',monospace;font-size:11px;">GET /stats</code>, <code style="font-family:'Space Mono',monospace;font-size:11px;">GET /health</code>. The <code style="font-family:'Space Mono',monospace;font-size:11px;">/health</code> endpoint is critical for CloudWatch.
+              </div>
+              <div class="step-tags"><span class="badge devops">Flask</span></div>
+            </li>
+            <li>
+              <span class="step-num">2.3</span>
+              <div class="step-text">
+                Containerize with Docker. Write a production-grade Dockerfile using a slim Python base image. Run Gunicorn (not Flask dev server) as the WSGI server with 4 workers.
+                <span class="cmd">docker build -t cloudpulse-api . && docker run -p 5000:5000 cloudpulse-api</span>
+              </div>
+              <div class="step-tags"><span class="badge devops">Docker</span></div>
+            </li>
+            <li>
+              <span class="step-num">2.4</span>
+              <div class="step-text">
+                Set up Nginx as a reverse proxy on EC2, terminating SSL with the ACM cert. Nginx forwards traffic to Gunicorn on 127.0.0.1:5000. Write a systemd service file so the app restarts on crash.
+              </div>
+              <div class="step-tags"><span class="badge aws">EC2</span></div>
+            </li>
+            <li>
+              <span class="step-num">2.5</span>
+              <div class="step-text">
+                Write unit tests using pytest for each endpoint. Write an integration test that spins up a local SQLite DB and validates the full create → query → delete flow.
+                <span class="cmd">pytest tests/ -v --cov=app --cov-report=html</span>
+              </div>
+              <div class="step-tags"><span class="badge devops">Testing</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PHASE 3 -->
+      <div class="phase">
+        <div class="phase-dot">3</div>
+        <div class="phase-header">
+          <span class="phase-week">WEEK 3</span>
+          <span class="phase-title">Lambda Polling Engine + EventBridge</span>
+          <span class="badge aws">Lambda</span>
+          <span class="badge aws">EventBridge</span>
+        </div>
+        <div class="phase-body">
+          <div class="phase-intro">The heart of CloudPulse — a serverless function that wakes up every minute, checks all registered URLs, writes results to the database, and triggers alerts on failures.</div>
+          <ul class="step-list">
+            <li>
+              <span class="step-num">3.1</span>
+              <div class="step-text">
+                Write the Lambda function in Python. It queries the Flask API for all active monitors, makes HTTP requests to each URL (with a 10s timeout), and posts results back to <code style="font-family:'Space Mono',monospace;font-size:11px;">POST /internal/check-result</code>.
+              </div>
+              <div class="step-tags"><span class="badge aws">Lambda</span></div>
+            </li>
+            <li>
+              <span class="step-num">3.2</span>
+              <div class="step-text">
+                Deploy the Lambda inside the same VPC so it can reach the RDS directly. Package it using a Lambda Layer for dependencies (requests, boto3). Set memory to 128MB to stay free.
+                <span class="cmd">zip -r lambda.zip lambda_function.py && aws lambda update-function-code --function-name cloudpulse-poller --zip-file fileb://lambda.zip</span>
+              </div>
+              <div class="step-tags"><span class="badge aws">Lambda</span></div>
+            </li>
+            <li>
+              <span class="step-num">3.3</span>
+              <div class="step-text">
+                Create an EventBridge rule with a cron expression <code style="font-family:'Space Mono',monospace;font-size:11px;">rate(1 minute)</code> that triggers the Lambda. AWS free tier gives you 1M Lambda invocations/month — checking 10 URLs = 14,400 invocations/day, well within limits.
+              </div>
+              <div class="step-tags"><span class="badge aws">EventBridge</span></div>
+            </li>
+            <li>
+              <span class="step-num">3.4</span>
+              <div class="step-text">
+                Implement downtime detection: if a URL fails 2 consecutive checks, create an incident record and publish a message to an SNS topic. SNS sends an email alert to you instantly.
+              </div>
+              <div class="step-tags"><span class="badge aws">SNS</span><span class="badge sec">IAM</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PHASE 4 -->
+      <div class="phase">
+        <div class="phase-dot">4</div>
+        <div class="phase-header">
+          <span class="phase-week">WEEK 4</span>
+          <span class="phase-title">CI/CD Pipeline with GitHub Actions</span>
+          <span class="badge devops">GitHub Actions</span>
+          <span class="badge devops">CI/CD</span>
+        </div>
+        <div class="phase-body">
+          <div class="phase-intro">The pipeline should be as close to what you built at Exalttek as possible — security scanning, test gates, automated deploy, one-click rollback.</div>
+          <ul class="step-list">
+            <li>
+              <span class="step-num">4.1</span>
+              <div class="step-text">
+                Write the CI workflow (<code style="font-family:'Space Mono',monospace;font-size:11px;">ci.yml</code>): triggers on PR to main. Jobs: (1) <strong>lint</strong> with flake8 + black, (2) <strong>test</strong> with pytest + coverage gate (fail if &lt;80%), (3) <strong>security</strong> with bandit (Python SAST) and safety (dependency CVE check).
+              </div>
+              <div class="step-tags"><span class="badge devops">CI</span></div>
+            </li>
+            <li>
+              <span class="step-num">4.2</span>
+              <div class="step-text">
+                Write the CD workflow (<code style="font-family:'Space Mono',monospace;font-size:11px;">deploy.yml</code>): triggers on push to main after CI passes. Build Docker image, push to ECR (free tier: 500MB/month), SSH into EC2, pull new image, restart the container.
+                <span class="cmd">docker build -t $ECR_REGISTRY/cloudpulse-api:$SHA . && docker push $ECR_REGISTRY/cloudpulse-api:$SHA</span>
+              </div>
+              <div class="step-tags"><span class="badge aws">ECR</span><span class="badge devops">CD</span></div>
+            </li>
+            <li>
+              <span class="step-num">4.3</span>
+              <div class="step-text">
+                Implement rollback: tag the previous image as <code style="font-family:'Space Mono',monospace;font-size:11px;">last-stable</code> before every deploy. Add a manual <code style="font-family:'Space Mono',monospace;font-size:11px;">rollback.yml</code> workflow triggered via GitHub UI that redeploys the <code style="font-family:'Space Mono',monospace;font-size:11px;">last-stable</code> image.
+              </div>
+              <div class="step-tags"><span class="badge devops">Rollback</span></div>
+            </li>
+            <li>
+              <span class="step-num">4.4</span>
+              <div class="step-text">
+                Store all secrets (DB password, AWS keys, EC2 SSH key) in GitHub Actions Secrets. Use OIDC (OpenID Connect) instead of static AWS keys — add an IAM role that trusts GitHub Actions OIDC provider. This is production-grade security.
+              </div>
+              <div class="step-tags"><span class="badge sec">OIDC</span><span class="badge sec">IAM</span></div>
+            </li>
+            <li>
+              <span class="step-num">4.5</span>
+              <div class="step-text">
+                Write a Terraform CD sub-workflow: on changes to <code style="font-family:'Space Mono',monospace;font-size:11px;">/terraform/**</code>, run <code style="font-family:'Space Mono',monospace;font-size:11px;">terraform plan</code> in CI and post the plan as a PR comment. On merge, run <code style="font-family:'Space Mono',monospace;font-size:11px;">terraform apply</code> automatically. This is GitOps.
+              </div>
+              <div class="step-tags"><span class="badge devops">GitOps</span><span class="badge devops">Terraform</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PHASE 5 -->
+      <div class="phase">
+        <div class="phase-dot">5</div>
+        <div class="phase-header">
+          <span class="phase-week">WEEK 5</span>
+          <span class="phase-title">Observability — CloudWatch, Prometheus & Grafana</span>
+          <span class="badge mon">Monitoring</span>
+          <span class="badge mon">Alerts</span>
+        </div>
+        <div class="phase-body">
+          <div class="phase-intro">Replicate the observability stack from your resume — custom dashboards, alert policies, and log aggregation. No Datadog needed; everything here is free.</div>
+          <ul class="step-list">
+            <li>
+              <span class="step-num">5.1</span>
+              <div class="step-text">
+                Install the CloudWatch Agent on EC2. Configure it to ship custom metrics: API request count, response time p50/p95/p99, error rate, active monitors count. Define metric namespaces.
+              </div>
+              <div class="step-tags"><span class="badge mon">CloudWatch</span></div>
+            </li>
+            <li>
+              <span class="step-num">5.2</span>
+              <div class="step-text">
+                Create 12 CloudWatch Alarms: CPU &gt;70%, memory &gt;80%, API error rate &gt;5%, RDS connections &gt;50, Lambda errors &gt;0, Lambda duration &gt;5s, etc. Route alarm actions to SNS → email.
+              </div>
+              <div class="step-tags"><span class="badge mon">Alarms</span></div>
+            </li>
+            <li>
+              <span class="step-num">5.3</span>
+              <div class="step-text">
+                Add a <code style="font-family:'Space Mono',monospace;font-size:11px;">/metrics</code> endpoint to the Flask API that exposes Prometheus-format metrics using the <code style="font-family:'Space Mono',monospace;font-size:11px;">prometheus-client</code> Python library. Track request count, latency histograms, and error counts.
+                <span class="cmd">pip install prometheus-client && flask route → /metrics</span>
+              </div>
+              <div class="step-tags"><span class="badge mon">Prometheus</span></div>
+            </li>
+            <li>
+              <span class="step-num">5.4</span>
+              <div class="step-text">
+                Install Prometheus + Grafana on the EC2 (Docker Compose for simplicity). Prometheus scrapes <code style="font-family:'Space Mono',monospace;font-size:11px;">localhost:5000/metrics</code> every 15s. Grafana connects to Prometheus as data source.
+              </div>
+              <div class="step-tags"><span class="badge mon">Grafana</span></div>
+            </li>
+            <li>
+              <span class="step-num">5.5</span>
+              <div class="step-text">
+                Build 10 Grafana dashboards: API Overview (RPS, latency, errors), URL Uptime % per monitor, Incident History timeline, EC2 resource utilization, Lambda invocations & duration, Database connection pool, and more.
+              </div>
+              <div class="step-tags"><span class="badge mon">Dashboards</span></div>
+            </li>
+            <li>
+              <span class="step-num">5.6</span>
+              <div class="step-text">
+                Configure CloudWatch Log Groups with structured JSON logging from Flask (using Python's <code style="font-family:'Space Mono',monospace;font-size:11px;">python-json-logger</code>). Set log retention to 7 days to stay within free tier. Create log metric filters for ERROR-level events.
+              </div>
+              <div class="step-tags"><span class="badge mon">Logs</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PHASE 6 -->
+      <div class="phase">
+        <div class="phase-dot">6</div>
+        <div class="phase-header">
+          <span class="phase-week">WEEK 6</span>
+          <span class="phase-title">Frontend Dashboard + CDN Deployment</span>
+          <span class="badge aws">CloudFront</span>
+          <span class="badge aws">S3</span>
+        </div>
+        <div class="phase-body">
+          <div class="phase-intro">Build a live status dashboard that calls your API and visualizes uptime history, response times, and incidents — deployed globally via CloudFront.</div>
+          <ul class="step-list">
+            <li>
+              <span class="step-num">6.1</span>
+              <div class="step-text">
+                Build a clean HTML/CSS/JS (or React) status dashboard with: live uptime percentages per URL, response time charts (Chart.js), incident history list, and a global "All Systems Go" / "Incident Detected" banner.
+              </div>
+              <div class="step-tags"><span class="badge devops">Frontend</span></div>
+            </li>
+            <li>
+              <span class="step-num">6.2</span>
+              <div class="step-text">
+                Configure the S3 bucket for static website hosting. Set bucket policy for public read. Enable S3 server access logging to a separate log bucket.
+                <span class="cmd">aws s3 sync ./frontend/dist s3://cloudpulse-frontend --delete</span>
+              </div>
+              <div class="step-tags"><span class="badge aws">S3</span></div>
+            </li>
+            <li>
+              <span class="step-num">6.3</span>
+              <div class="step-text">
+                Create a CloudFront distribution with S3 as origin. Enable HTTPS-only, attach your ACM certificate. Set up custom error page for 404 → index.html (for SPA routing). Enable CloudFront access logs.
+              </div>
+              <div class="step-tags"><span class="badge aws">CloudFront</span></div>
+            </li>
+            <li>
+              <span class="step-num">6.4</span>
+              <div class="step-text">
+                Add frontend deployment to your GitHub Actions CD pipeline: build step → <code style="font-family:'Space Mono',monospace;font-size:11px;">npm run build</code> → sync to S3 → invalidate CloudFront cache. The whole frontend deploy becomes one-click.
+                <span class="cmd">aws cloudfront create-invalidation --distribution-id $CF_ID --paths "/*"</span>
+              </div>
+              <div class="step-tags"><span class="badge devops">CD</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PHASE 7 -->
+      <div class="phase">
+        <div class="phase-dot">7</div>
+        <div class="phase-header">
+          <span class="phase-week">WEEK 7</span>
+          <span class="phase-title">Security Hardening + IAM Audit</span>
+          <span class="badge sec">Security</span>
+          <span class="badge sec">IAM</span>
+        </div>
+        <div class="phase-body">
+          <div class="phase-intro">Mirror the IAM security review you did at Exalttek. Audit every role, apply least-privilege, enable GuardDuty, and document the findings like a real cloud security report.</div>
+          <ul class="step-list">
+            <li>
+              <span class="step-num">7.1</span>
+              <div class="step-text">
+                Audit all IAM roles and policies. Use IAM Access Analyzer to find over-privilege. Identify any role with wildcard (*) actions or resources and replace with specific permissions. Document findings in a markdown report.
+              </div>
+              <div class="step-tags"><span class="badge sec">IAM</span></div>
+            </li>
+            <li>
+              <span class="step-num">7.2</span>
+              <div class="step-text">
+                Enable AWS GuardDuty (30-day free trial) for threat detection. Enable AWS Config to track resource configuration changes. Set up an SNS alert for any config change to EC2 security groups.
+              </div>
+              <div class="step-tags"><span class="badge sec">GuardDuty</span></div>
+            </li>
+            <li>
+              <span class="step-num">7.3</span>
+              <div class="step-text">
+                Move all secrets (DB password, API keys) to AWS Secrets Manager. Update the Flask app and Lambda to fetch secrets at runtime using boto3. Rotate the DB password manually and confirm the app auto-picks it up.
+              </div>
+              <div class="step-tags"><span class="badge sec">Secrets</span></div>
+            </li>
+            <li>
+              <span class="step-num">7.4</span>
+              <div class="step-text">
+                Add rate limiting to the Flask API using Flask-Limiter (e.g., 60 req/min per IP). Add input validation + parameterized SQL queries to prevent injection. Run OWASP ZAP or Nikto against the API and document findings.
+              </div>
+              <div class="step-tags"><span class="badge sec">AppSec</span></div>
+            </li>
+            <li>
+              <span class="step-num">7.5</span>
+              <div class="step-text">
+                Enable S3 bucket versioning and object lock on the Terraform state bucket. Enable S3 bucket encryption (SSE-S3). Block all public access on non-frontend buckets. Enable CloudTrail for full API audit logging.
+              </div>
+              <div class="step-tags"><span class="badge sec">CloudTrail</span><span class="badge aws">S3</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PHASE 8 -->
+      <div class="phase">
+        <div class="phase-dot">8</div>
+        <div class="phase-header">
+          <span class="phase-week">WEEK 8</span>
+          <span class="phase-title">Kubernetes Local Cluster + Documentation</span>
+          <span class="badge devops">K8s</span>
+          <span class="badge devops">Helm</span>
+        </div>
+        <div class="phase-body">
+          <div class="phase-intro">EKS is not free-tier eligible, so we simulate it locally with kind or minikube, deploy the app using Helm charts, and document the EKS-equivalent path for your resume.</div>
+          <ul class="step-list">
+            <li>
+              <span class="step-num">8.1</span>
+              <div class="step-text">
+                Install <code style="font-family:'Space Mono',monospace;font-size:11px;">kind</code> (Kubernetes in Docker) locally. Create a 3-node cluster config. Push your Docker image to a local registry.
+                <span class="cmd">kind create cluster --config kind-config.yaml && kubectl cluster-info</span>
+              </div>
+              <div class="step-tags"><span class="badge devops">Kubernetes</span></div>
+            </li>
+            <li>
+              <span class="step-num">8.2</span>
+              <div class="step-text">
+                Write Helm charts for the API: Deployment, Service, ConfigMap, HorizontalPodAutoscaler (HPA). Use values.yaml to parameterize env per environment (dev/prod). Deploy to kind.
+                <span class="cmd">helm install cloudpulse-api ./charts/api --values ./charts/api/values.prod.yaml</span>
+              </div>
+              <div class="step-tags"><span class="badge devops">Helm</span></div>
+            </li>
+            <li>
+              <span class="step-num">8.3</span>
+              <div class="step-text">
+                Configure HPA to scale from 1→3 replicas based on CPU &gt;60%. Use <code style="font-family:'Space Mono',monospace;font-size:11px;">kubectl run --generator</code> to simulate load and watch pods scale horizontally. Screenshot and document for your resume.
+              </div>
+              <div class="step-tags"><span class="badge devops">HPA</span></div>
+            </li>
+            <li>
+              <span class="step-num">8.4</span>
+              <div class="step-text">
+                Write a comprehensive README.md with: architecture diagram (ASCII or draw.io), local setup guide, deployment runbook, observability docs, and a "lessons learned" section. Write a dev.to or Medium article about this project.
+              </div>
+              <div class="step-tags"><span class="badge devops">Docs</span></div>
+            </li>
+            <li>
+              <span class="step-num">8.5</span>
+              <div class="step-text">
+                Final polish: record a 5-minute Loom demo video of the live system. Add the GitHub link to your resume and LinkedIn. Tag it with: AWS, Terraform, GitHub Actions, Docker, Kubernetes, Prometheus, Grafana, Python.
+              </div>
+              <div class="step-tags"><span class="badge devops">Portfolio</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DELIVERABLES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div class="section-title">What You'll Have at the End</div>
+    </div>
+    <div class="deliverables">
+      <div class="deliverable-card">
+        <div class="deliverable-icon">🌐</div>
+        <h4>Live Production Site</h4>
+        <p>saiteja.shop — a real running product anyone can visit and use</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-icon">📁</div>
+        <h4>GitHub Portfolio Repo</h4>
+        <p>Production-quality codebase with full history, PRs, and CI/CD badges</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-icon">🔒</div>
+        <h4>Security Audit Report</h4>
+        <p>IAM findings doc you can reference directly in interviews</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-icon">📊</div>
+        <h4>Grafana Dashboards</h4>
+        <p>10+ dashboards with real traffic data — screenshottable for resume</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-icon">🏗️</div>
+        <h4>Terraform Modules</h4>
+        <p>Reusable IaC modules — 15+ AWS resources all in version control</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-icon">🚀</div>
+        <h4>Full CI/CD Pipeline</h4>
+        <p>Lint → test → SAST → build → deploy → rollback, all automated</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-icon">⎈</div>
+        <h4>Helm Charts</h4>
+        <p>Working Kubernetes deployment with HPA — demonstrable locally</p>
+      </div>
+      <div class="deliverable-card">
+        <div class="deliverable-icon">📝</div>
+        <h4>Architecture Blog Post</h4>
+        <p>Published article demonstrating your ability to communicate technically</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- COST TABLE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div class="section-title">AWS Free Tier Cost Breakdown</div>
+    </div>
+
+    <div class="note-box">
+      <strong>⚠ WATCH OUT — </strong> RDS and EC2 free tier last only 12 months from account creation. GuardDuty is 30-day trial. Always set a billing alert at $1 to get notified immediately.
+    </div>
+
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th>SERVICE</th>
+          <th>FREE TIER LIMIT</th>
+          <th>ESTIMATED USAGE</th>
+          <th>COST</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>EC2 t2.micro</td><td>750 hrs/month</td><td>720 hrs</td><td class="free">$0</td></tr>
+        <tr><td>RDS db.t3.micro (MySQL)</td><td>750 hrs/month</td><td>720 hrs</td><td class="free">$0</td></tr>
+        <tr><td>S3 Storage</td><td>5 GB</td><td>~50 MB</td><td class="free">$0</td></tr>
+        <tr><td>Lambda Invocations</td><td>1M requests/month</td><td>~45K/month</td><td class="free">$0</td></tr>
+        <tr><td>Lambda Compute</td><td>400K GB-sec</td><td>~2K GB-sec</td><td class="free">$0</td></tr>
+        <tr><td>CloudFront</td><td>1 TB transfer + 10M req</td><td>~1 GB</td><td class="free">$0</td></tr>
+        <tr><td>Route 53</td><td>$0.50/hosted zone</td><td>1 zone</td><td class="warn">~$0.50</td></tr>
+        <tr><td>SNS Email</td><td>1000 emails/month</td><td>~50</td><td class="free">$0</td></tr>
+        <tr><td>CloudWatch Metrics</td><td>10 custom metrics</td><td>~10</td><td class="free">$0</td></tr>
+        <tr><td>ECR</td><td>500 MB storage</td><td>~200 MB</td><td class="free">$0</td></tr>
+        <tr><td>Secrets Manager</td><td>30-day trial per secret</td><td>3 secrets</td><td class="warn">~$0.12/mo after trial</td></tr>
+        <tr><td><strong>TOTAL</strong></td><td></td><td></td><td class="free"><strong>~$0.50–1/month</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- RESUME COVERAGE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div class="section-title">100% Resume Coverage Map</div>
+    </div>
+    <div class="coverage-grid">
+      <div class="coverage-item"><span class="check">✓</span><span>EC2 + VPC + IAM</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>S3 + Route 53</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>CloudWatch</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>Lambda + ECS</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>Terraform IaC</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>GitHub Actions</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>CI/CD Pipelines</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>Docker</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>Kubernetes + Helm</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>Datadog / Prometheus</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>Grafana</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>Python Flask</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>RESTful APIs</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>MySQL + MongoDB*</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>Least-Privilege IAM</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>SRE Practices</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>GitOps</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>Agile / Scrum</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>Linux + Bash</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>Log Rotation</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>Health Checks</span></div>
+      <div class="coverage-item"><span class="check">✓</span><span>Microservices</span></div>
+    </div>
+    <p style="font-size: 11px; color: var(--muted); margin-top: 12px; font-family: 'Space Mono', monospace;">* MongoDB can be added as a secondary store for raw check logs in Week 3 — use MongoDB Atlas free tier (512 MB)</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span class="domain">saiteja.shop</span>
+    <p>CLOUDPULSE — BUILT BY SAI TEJA THADUKA</p>
+    <p style="margin-top: 8px; font-size: 10px;">AWS · TERRAFORM · GITHUB ACTIONS · DOCKER · KUBERNETES · PROMETHEUS · GRAFANA · PYTHON</p>
+  </div>
+
+</div>
+</body>
+</html>
